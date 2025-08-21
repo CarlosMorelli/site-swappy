@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Troca - Chat</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container page" id="chat-page" style="display: none;">
+        <!-- Chat Header -->
+        <header class="chat-header">
+            <button class="back-btn" onclick="showPage('home')">←</button>
+            <h2>João Silva</h2>
+        </header>
+
+        <!-- Chat Messages -->
+        <main class="chat-main">
+            <div class="chat-messages">
+                <!-- Mensagem recebida -->
+                <div class="message received">
+                    <div class="message-bubble"></div>
+                </div>
+                
+                <!-- Mensagem enviada -->
+                <div class="message sent">
+                    <div class="message-bubble"></div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Chat Input -->
+        <footer class="chat-footer">
+            <div class="chat-input-container">
+                <button class="attachment-btn">+</button>
+                <input type="text" class="chat-input" placeholder="Mensagem">
+                <button class="send-btn">></button>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

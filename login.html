@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Troca - Login</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container page" id="login-page" style="display: none;">
+        <!-- Header -->
+        <header class="page-header">
+            <button class="back-btn" onclick="showPage('home')">←</button>
+            <h1>Login</h1>
+        </header>
+
+        <!-- Main Content -->
+        <main class="auth-main">
+            <div class="auth-form">
+                <h2>Bem-vindo de volta!</h2>
+                <p>Entre na sua conta para continuar</p>
+
+                <form class="form">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-input" placeholder="seu@email.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Senha</label>
+                        <input type="password" class="form-input" placeholder="Sua senha">
+                    </div>
+
+                    <button type="submit" class="btn-primary full-width">Entrar</button>
+                </form>
+
+                <div class="auth-footer">
+                    <p>Não tem uma conta? <a href="#" onclick="showPage('signup')">Cadastre-se</a></p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Troca - Página de Produto</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container page" id="produto-page" style="display: none;">
+        <!-- Header -->
+        <header class="page-header">
+            <button class="back-btn" onclick="showPage('home')">←</button>
+            <h1>Página de Produto</h1>
+        </header>
+
+        <!-- Main Content -->
+        <main class="product-main">
+            <!-- Product Image -->
+            <section class="product-hero">
+                <div class="product-main-image"></div>
+            </section>
+
+            <!-- Product Info -->
+            <section class="product-details">
+                <h2>Protato Name</h2>
+                <p class="product-type">Troca</p>
+                <button class="btn-primary full-width">Quero trocar</button>
+                
+                <!-- Seller Info -->
+                <div class="seller-info">
+                    <div class="seller-avatar"></div>
+                    <div class="seller-details">
+                        <h3>João Silva</h3>
+                        <div class="rating">
+                            <span class="stars">★★★★★</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="description-section">
+                    <h3>Descrição</h3>
+                    <div class="description-lines">
+                        <div class="description-line"></div>
+                        <div class="description-line short"></div>
+                    </div>
+                </div>
+
+                <!-- Similar Products -->
+                <div class="similar-products">
+                    <h3>Produtos Similares</h3>
+                    <div class="similar-grid">
+                        <div class="similar-item">
+                            <div class="similar-image"></div>
+                            <p>Troca</p>
+                        </div>
+                        <div class="similar-item">
+                            <div class="similar-image"></div>
+                            <p>Troca</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
