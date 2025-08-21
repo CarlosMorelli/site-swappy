@@ -2,11 +2,24 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Troca - Plataforma de Trocas</title>
     <link rel="stylesheet" href="styles.css">
+    <meta name="description" content="Plataforma de trocas e vendas online - TCC">
+    <meta name="keywords" content="troca, venda, produtos, marketplace">
 </head>
 <body>
+    <!-- Ícones de navegação flutuantes -->
+    <div class="nav-icons">
+        <button class="nav-icon" onclick="showPage('carrinho')" title="Carrinho">
+            🛒
+            <span class="cart-count">0</span>
+        </button>
+        <button class="nav-icon" onclick="showPage('chat-list')" title="Chat">
+            💬
+        </button>
+    </div>
+
     <!-- Página Home -->
     <div class="container" id="home-page">
         <!-- Header -->
@@ -38,15 +51,15 @@
 
             <!-- Categories -->
             <section class="categories">
-                <div class="category-card">
+                <div class="category-card" data-category="roupas">
                     <div class="category-icon">👕</div>
                     <span>Roupas</span>
                 </div>
-                <div class="category-card">
+                <div class="category-card" data-category="eletronicos">
                     <div class="category-icon">💻</div>
                     <span>Eletrônicos</span>
                 </div>
-                <div class="category-card">
+                <div class="category-card" data-category="livros">
                     <div class="category-icon">📚</div>
                     <span>Livros</span>
                 </div>
@@ -56,38 +69,12 @@
             <section class="products-section">
                 <div class="section-header">
                     <h2>Produtos Recentes</h2>
-                    <span class="section-count">4 ></span>
+                    <span class="section-count">1/1 ></span>
                 </div>
                 <div class="products-grid">
-                    <div class="product-card" onclick="showPage('produto')">
-                        <div class="product-image"></div>
-                        <div class="product-info">
-                            <h3>Troca</h3>
-                            <p class="product-price">R$ 300</p>
-                        </div>
-                    </div>
-                    <div class="product-card" onclick="showPage('produto')">
-                        <div class="product-image"></div>
-                        <div class="product-info">
-                            <h3>Troca</h3>
-                            <p class="product-price">R$ 10.00</p>
-                        </div>
-                    </div>
-                    <div class="product-card" onclick="showPage('produto')">
-                        <div class="product-image"></div>
-                        <div class="product-info">
-                            <h3>Venda</h3>
-                            <p class="product-price">R$ 800</p>
-                        </div>
-                    </div>
-                    <div class="product-card" onclick="showPage('produto')">
-                        <div class="product-image"></div>
-                        <div class="product-info">
-                            <h3>Venda</h3>
-                            <p class="product-price">R$ 30.00</p>
-                        </div>
-                    </div>
+                    <!-- Produtos serão carregados dinamicamente pelo JavaScript -->
                 </div>
+                <!-- Controles do carrossel serão adicionados dinamicamente -->
             </section>
 
             <!-- Producers -->
@@ -205,16 +192,16 @@
             <!-- Product Form -->
             <section class="product-form">
                 <div class="form-group">
-                    <label>Junnanoname</label>
+                    <label>Nome do Produto</label>
                     <input type="text" class="form-input" placeholder="Nome do produto">
                 </div>
 
                 <div class="form-group">
-                    <label>R$ 20.00</label>
-                    <input type="text" class="form-input" placeholder="Preço">
+                    <label>Preço</label>
+                    <input type="text" class="form-input" placeholder="R$ 20.00">
                 </div>
 
-                <button class="btn-primary full-width">Quero trocar</button>
+                <button class="btn-primary full-width">Anunciar Produto</button>
 
                 <div class="form-group">
                     <label>Categoria</label>
@@ -345,6 +332,57 @@
 
                 <div class="auth-footer">
                     <p>Já tem uma conta? <a href="#" onclick="showPage('login')">Faça login</a></p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Página de Carrinho -->
+    <div class="container page" id="carrinho-page" style="display: none;">
+        <!-- Header -->
+        <header class="page-header">
+            <button class="back-btn" onclick="showPage('home')">←</button>
+            <h1>🛒 Meu Carrinho</h1>
+        </header>
+
+        <!-- Main Content -->
+        <main class="cart-items">
+            <!-- Itens do carrinho serão carregados dinamicamente -->
+        </main>
+    </div>
+
+    <!-- Página de Lista de Chats -->
+    <div class="container page" id="chat-list-page" style="display: none;">
+        <!-- Header -->
+        <header class="page-header">
+            <button class="back-btn" onclick="showPage('home')">←</button>
+            <h1>💬 Conversas</h1>
+        </header>
+
+        <!-- Main Content -->
+        <main class="chat-list">
+            <div class="chat-item" onclick="showPage('chat')">
+                <div class="chat-avatar"></div>
+                <div class="chat-info">
+                    <h3>João Silva</h3>
+                    <p>Olá! Tenho interesse no seu produto.</p>
+                    <span class="chat-time">2 min atrás</span>
+                </div>
+            </div>
+            <div class="chat-item" onclick="showPage('chat')">
+                <div class="chat-avatar"></div>
+                <div class="chat-info">
+                    <h3>Maria Santos</h3>
+                    <p>Podemos negociar o preço?</p>
+                    <span class="chat-time">1 hora atrás</span>
+                </div>
+            </div>
+            <div class="chat-item" onclick="showPage('chat')">
+                <div class="chat-avatar"></div>
+                <div class="chat-info">
+                    <h3>Pedro Costa</h3>
+                    <p>Produto ainda disponível?</p>
+                    <span class="chat-time">3 horas atrás</span>
                 </div>
             </div>
         </main>
