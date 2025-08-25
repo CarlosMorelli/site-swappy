@@ -309,6 +309,11 @@ body {
     box-shadow: 0 4px 15px rgba(192, 57, 43, 0.3);
     position: relative;
     overflow: hidden;
+    margin-bottom: 10px; /* Espaçamento entre botões */
+}
+
+.btn-primary + .btn-primary {
+    margin-top: 10px; /* Espaçamento adicional entre botões consecutivos */
 }
 
 .btn-primary::before {
@@ -2249,5 +2254,208 @@ body {
     color: #666;
     font-style: italic;
     padding: 40px 20px;
+}
+
+
+/* Barra de Apps (Dock) */
+.app-dock {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 20px 20px 20px;
+    z-index: 1000;
+    box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.1);
+}
+
+.dock-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 8px;
+    border-radius: 12px;
+    min-width: 60px;
+}
+
+.dock-item:hover {
+    background: rgba(255, 215, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.dock-item:active {
+    transform: translateY(0);
+}
+
+.dock-icon {
+    font-size: 24px;
+    margin-bottom: 4px;
+    transition: all 0.3s ease;
+}
+
+.dock-item:hover .dock-icon {
+    transform: scale(1.1);
+}
+
+.dock-label {
+    font-size: 10px;
+    color: #333;
+    font-weight: 500;
+    text-align: center;
+}
+
+/* Badge do carrinho no dock */
+.cart-badge {
+    position: absolute;
+    top: 2px;
+    right: 8px;
+    background: #FF4444;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: bold;
+    min-width: 18px;
+}
+
+.cart-badge:empty {
+    display: none;
+}
+
+/* Ajuste para o corpo da página para não ficar atrás do dock */
+body {
+    padding-bottom: 80px;
+}
+
+/* Responsividade do dock */
+@media (max-width: 768px) {
+    .app-dock {
+        padding: 8px 15px 15px 15px;
+    }
+    
+    .dock-item {
+        min-width: 50px;
+        padding: 6px;
+    }
+    
+    .dock-icon {
+        font-size: 20px;
+    }
+    
+    .dock-label {
+        font-size: 9px;
+    }
+    
+    .cart-badge {
+        width: 16px;
+        height: 16px;
+        font-size: 9px;
+        top: 1px;
+        right: 6px;
+    }
+}
+
+@media (max-width: 480px) {
+    .app-dock {
+        padding: 6px 10px 12px 10px;
+    }
+    
+    .dock-item {
+        min-width: 45px;
+        padding: 4px;
+    }
+    
+    .dock-icon {
+        font-size: 18px;
+        margin-bottom: 2px;
+    }
+    
+    .dock-label {
+        font-size: 8px;
+    }
+}
+
+/* Animação de entrada do dock */
+.app-dock {
+    animation: slideUpDock 0.5s ease-out;
+}
+
+@keyframes slideUpDock {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Efeito de glassmorphism para o dock */
+.app-dock {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Tema escuro para o dock (opcional) */
+@media (prefers-color-scheme: dark) {
+    .app-dock {
+        background: rgba(0, 0, 0, 0.8);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .dock-label {
+        color: #fff;
+    }
+    
+    .dock-item:hover {
+        background: rgba(255, 215, 0, 0.3);
+    }
+}
+
+
+/* Estilos para informações de vendas e avaliações */
+.product-sales, .product-rating {
+    font-size: clamp(12px, 3vw, 14px);
+    color: var(--text-medium);
+    margin-top: var(--spacing-xs);
+    font-weight: 600;
+    background: var(--light-cream);
+    padding: 2px 8px;
+    border-radius: 12px;
+    display: inline-block;
+}
+
+.product-sales {
+    background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+    color: white;
+}
+
+.product-rating {
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    color: #333;
+}
+
+/* Melhorar espaçamento dos elementos do produto */
+.product-info p {
+    margin-bottom: var(--spacing-xs);
+}
+
+.product-info p:last-child {
+    margin-bottom: 0;
 }
 

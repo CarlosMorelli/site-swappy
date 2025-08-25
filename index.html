@@ -9,16 +9,7 @@
     <meta name="keywords" content="troca, venda, produtos, marketplace">
 </head>
 <body>
-    <!-- Ícones de navegação flutuantes -->
-    <div class="nav-icons">
-        <button class="nav-icon" onclick="showPage('carrinho')" title="Carrinho">
-            🛒
-            <span class="cart-count">0</span>
-        </button>
-        <button class="nav-icon" onclick="showPage('chat-list')" title="Chat">
-            💬
-        </button>
-    </div>
+    <!-- Ícones de navegação removidos - usando apenas o dock -->
 
     <!-- Página Home -->
     <div class="container" id="home-page">
@@ -30,7 +21,7 @@
                     <span class="nav-item active">Home</span>
                 </div>
                 <div class="nav-right">
-                    <button class="nav-btn" onclick="showPage('login')">👤</button>
+                    <!-- Botões removidos - usando apenas o dock -->
                 </div>
             </nav>
             <!-- Barra de Pesquisa -->
@@ -82,6 +73,36 @@
                 </div>
                 <div class="products-grid" id="products-grid">
                     <!-- Produtos serão carregados dinamicamente pelo JavaScript -->
+                </div>
+            </section>
+
+            <!-- Produtos Mais Vendidos -->
+            <section class="products-section">
+                <div class="section-header">
+                    <h2>🔥 Mais Vendidos</h2>
+                    <div class="carousel-controls">
+                        <button class="carousel-btn" onclick="previousBestsellersPage()">←</button>
+                        <span class="section-count" id="bestsellers-count">1/1</span>
+                        <button class="carousel-btn" onclick="nextBestsellersPage()">→</button>
+                    </div>
+                </div>
+                <div class="products-grid" id="bestsellers-grid">
+                    <!-- Produtos mais vendidos serão carregados dinamicamente -->
+                </div>
+            </section>
+
+            <!-- Produtos Melhores Avaliados -->
+            <section class="products-section">
+                <div class="section-header">
+                    <h2>⭐ Melhores Avaliados</h2>
+                    <div class="carousel-controls">
+                        <button class="carousel-btn" onclick="previousTopRatedPage()">←</button>
+                        <span class="section-count" id="toprated-count">1/1</span>
+                        <button class="carousel-btn" onclick="nextTopRatedPage()">→</button>
+                    </div>
+                </div>
+                <div class="products-grid" id="toprated-grid">
+                    <!-- Produtos melhores avaliados serão carregados dinamicamente -->
                 </div>
             </section>
 
@@ -161,8 +182,12 @@
                 <h2 id="product-name">Nome do Produto</h2>
                 <p class="product-type" id="product-type">Troca</p>
                 <p class="product-price" id="product-price">R$ 0,00</p>
-                <button class="btn-primary full-width" onclick="addToCart()">Adicionar ao Carrinho</button>
-                <button class="btn-primary full-width" onclick="showPage('chat')">Quero trocar</button>
+                
+                <!-- Botões de Ação com Espaçamento -->
+                <div class="product-actions">
+                    <button class="btn-primary full-width" id="add-to-cart-btn" onclick="addToCart()" style="margin-bottom: 10px;">Adicionar ao Carrinho</button>
+                    <button class="btn-primary full-width" id="trade-btn" onclick="showPage('chat')">Quero trocar</button>
+                </div>
                 
                 <!-- Seller Info -->
                 <div class="seller-info">
@@ -607,6 +632,93 @@
             <div class="modal-footer">
                 <button class="btn-primary" onclick="proceedToPurchase()">Continuar Compra</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Página de Perfil -->
+    <div class="container page" id="perfil-page" style="display: none;">
+        <!-- Header -->
+        <header class="page-header">
+            <button class="back-btn" onclick="showPage('home')">←</button>
+            <h1>Meu Perfil</h1>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="profile-section">
+                <div class="profile-avatar">
+                    <div class="avatar-placeholder">👤</div>
+                    <button class="change-avatar-btn">Alterar Foto</button>
+                </div>
+                
+                <div class="profile-info">
+                    <div class="form-group">
+                        <label for="profile-name">Nome Completo</label>
+                        <input type="text" id="profile-name" class="form-input" value="João Silva" />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="profile-email">E-mail</label>
+                        <input type="email" id="profile-email" class="form-input" value="joao.silva@email.com" />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="profile-phone">Telefone</label>
+                        <input type="tel" id="profile-phone" class="form-input" value="(11) 99999-9999" />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="profile-bio">Sobre mim</label>
+                        <textarea id="profile-bio" class="form-textarea" placeholder="Conte um pouco sobre você...">Apaixonado por tecnologia e sustentabilidade. Adoro trocar e vender produtos que não uso mais!</textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="profile-location">Localização</label>
+                        <input type="text" id="profile-location" class="form-input" value="São Paulo, SP" />
+                    </div>
+                </div>
+                
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">15</span>
+                        <span class="stat-label">Trocas Realizadas</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">8</span>
+                        <span class="stat-label">Vendas Concluídas</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">4.8</span>
+                        <span class="stat-label">Avaliação</span>
+                    </div>
+                </div>
+                
+                <div class="profile-actions">
+                    <button class="btn-primary" onclick="saveProfile()">Salvar Alterações</button>
+                    <button class="btn-secondary" onclick="showPage('configuracoes')">Configurações</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Barra de Apps (Dock) -->
+    <div class="app-dock">
+        <div class="dock-item" onclick="showPage('home')" title="Home">
+            <div class="dock-icon">🏠</div>
+            <span class="dock-label">Home</span>
+        </div>
+        <div class="dock-item" onclick="showPage('perfil')" title="Perfil">
+            <div class="dock-icon">👤</div>
+            <span class="dock-label">Perfil</span>
+        </div>
+        <div class="dock-item" onclick="showPage('carrinho')" title="Carrinho">
+            <div class="dock-icon">🛒</div>
+            <span class="dock-label">Carrinho</span>
+            <div class="cart-badge" id="dock-cart-count">0</div>
+        </div>
+        <div class="dock-item" onclick="showPage('chat-list')" title="Chat">
+            <div class="dock-icon">💬</div>
+            <span class="dock-label">Chat</span>
         </div>
     </div>
 

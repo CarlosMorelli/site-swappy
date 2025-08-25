@@ -144,6 +144,20 @@ function openProduct(product) {
     
     // Armazenar produto atual
     window.currentProduct = product;
+    
+    // Implementar lógica de exibição de botões baseada no tipo
+    const addToCartBtn = document.getElementById('add-to-cart-btn');
+    const tradeBtn = document.getElementById('trade-btn');
+    
+    if (product.type === 'Troca') {
+        // Para produtos de troca: esconder botão de carrinho, mostrar botão de trocar
+        if (addToCartBtn) addToCartBtn.style.display = 'none';
+        if (tradeBtn) tradeBtn.style.display = 'block';
+    } else if (product.type === 'Venda') {
+        // Para produtos de venda: mostrar botão de carrinho, esconder botão de trocar
+        if (addToCartBtn) addToCartBtn.style.display = 'block';
+        if (tradeBtn) tradeBtn.style.display = 'none';
+    }
 }
 
 // Função para filtrar por categoria
@@ -589,6 +603,189 @@ window.onclick = function(event) {
     const modal = document.getElementById('cart-detail-modal');
     if (event.target === modal) {
         closeModal();
+    }
+}
+
+
+
+// Variáveis para controle dos carrosséis das novas seções
+let bestsellersPageIndex = 0;
+let topRatedPageIndex = 0;
+
+// Produtos mais vendidos (baseado em vendas simuladas)
+const bestsellers = [
+    { id: 18, name: 'Smartphone Samsung', price: 'R$ 800,00', type: 'Venda', category: 'eletronicos', sales: 150 },
+    { id: 20, name: 'Notebook Dell', price: 'R$ 2500,00', type: 'Venda', category: 'eletronicos', sales: 89 },
+    { id: 2, name: 'Jeans Skinny', price: 'R$ 80,00', type: 'Venda', category: 'roupas', sales: 78 },
+    { id: 22, name: 'Smart TV 43"', price: 'R$ 1200,00', type: 'Venda', category: 'eletronicos', sales: 67 },
+    { id: 6, name: 'Camisa Social', price: 'R$ 70,00', type: 'Venda', category: 'roupas', sales: 56 },
+    { id: 38, name: 'Senhor dos Anéis', price: 'R$ 45,00', type: 'Venda', category: 'livros', sales: 45 },
+    { id: 24, name: 'Câmera Canon', price: 'R$ 2200,00', type: 'Venda', category: 'eletronicos', sales: 34 },
+    { id: 42, name: 'Sapiens', price: 'R$ 40,00', type: 'Venda', category: 'livros', sales: 32 },
+    { id: 8, name: 'Jaqueta Jeans', price: 'R$ 90,00', type: 'Venda', category: 'roupas', sales: 29 },
+    { id: 26, name: 'Caixa de Som JBL', price: 'R$ 180,00', type: 'Venda', category: 'eletronicos', sales: 28 }
+];
+
+// Produtos melhores avaliados (baseado em avaliações simuladas)
+const topRated = [
+    { id: 39, name: 'Código Limpo', price: 'R$ 80,00', type: 'Troca', category: 'livros', rating: 4.9 },
+    { id: 23, name: 'Console PS5', price: 'R$ 3500,00', type: 'Troca', category: 'eletronicos', rating: 4.8 },
+    { id: 41, name: 'O Alquimista', price: 'R$ 20,00', type: 'Troca', category: 'livros', rating: 4.8 },
+    { id: 21, name: 'Tablet iPad', price: 'R$ 1800,00', type: 'Troca', category: 'eletronicos', rating: 4.7 },
+    { id: 11, name: 'Blazer Feminino', price: 'R$ 85,00', type: 'Troca', category: 'roupas', rating: 4.7 },
+    { id: 31, name: 'Drone DJI', price: 'R$ 1500,00', type: 'Troca', category: 'eletronicos', rating: 4.6 },
+    { id: 45, name: 'Clean Architecture', price: 'R$ 75,00', type: 'Troca', category: 'livros', rating: 4.6 },
+    { id: 3, name: 'Vestido Floral', price: 'R$ 60,00', type: 'Troca', category: 'roupas', rating: 4.5 },
+    { id: 25, name: 'Smartwatch', price: 'R$ 350,00', type: 'Troca', category: 'eletronicos', rating: 4.5 },
+    { id: 49, name: 'O Nome do Vento', price: 'R$ 38,00', type: 'Troca', category: 'livros', rating: 4.4 }
+];
+
+// Função para carregar produtos mais vendidos
+function loadBestsellers() {
+    const bestsellersGrid = document.getElementById('bestsellers-grid');
+    if (!bestsellersGrid) return;
+    
+    const startIndex = bestsellersPageIndex * productsPerPage;
+    const endIndex = startIndex + productsPerPage;
+    const pageProducts = bestsellers.slice(startIndex, endIndex);
+    
+    bestsellersGrid.innerHTML = '';
+    
+    pageProducts.forEach(product => {
+        const productCard = document.createElement('div');
+        productCard.className = 'product-card';
+        productCard.onclick = () => openProduct(product);
+        
+        productCard.innerHTML = `
+            <div class="product-image"></div>
+            <div class="product-info">
+                <h3>${product.name}</h3>
+                <p class="product-type">${product.type}</p>
+                <p class="product-price">${product.price}</p>
+                <p class="product-sales">🔥 ${product.sales} vendas</p>
+            </div>
+        `;
+        
+        bestsellersGrid.appendChild(productCard);
+    });
+    
+    // Atualizar contador
+    const totalPages = Math.ceil(bestsellers.length / productsPerPage);
+    const bestsellersCount = document.getElementById('bestsellers-count');
+    if (bestsellersCount) {
+        bestsellersCount.textContent = `${bestsellersPageIndex + 1}/${totalPages}`;
+    }
+}
+
+// Função para carregar produtos melhores avaliados
+function loadTopRated() {
+    const topRatedGrid = document.getElementById('toprated-grid');
+    if (!topRatedGrid) return;
+    
+    const startIndex = topRatedPageIndex * productsPerPage;
+    const endIndex = startIndex + productsPerPage;
+    const pageProducts = topRated.slice(startIndex, endIndex);
+    
+    topRatedGrid.innerHTML = '';
+    
+    pageProducts.forEach(product => {
+        const productCard = document.createElement('div');
+        productCard.className = 'product-card';
+        productCard.onclick = () => openProduct(product);
+        
+        productCard.innerHTML = `
+            <div class="product-image"></div>
+            <div class="product-info">
+                <h3>${product.name}</h3>
+                <p class="product-type">${product.type}</p>
+                <p class="product-price">${product.price}</p>
+                <p class="product-rating">⭐ ${product.rating}/5.0</p>
+            </div>
+        `;
+        
+        topRatedGrid.appendChild(productCard);
+    });
+    
+    // Atualizar contador
+    const totalPages = Math.ceil(topRated.length / productsPerPage);
+    const topRatedCount = document.getElementById('toprated-count');
+    if (topRatedCount) {
+        topRatedCount.textContent = `${topRatedPageIndex + 1}/${totalPages}`;
+    }
+}
+
+// Funções de navegação para produtos mais vendidos
+function nextBestsellersPage() {
+    const totalPages = Math.ceil(bestsellers.length / productsPerPage);
+    if (bestsellersPageIndex < totalPages - 1) {
+        bestsellersPageIndex++;
+        loadBestsellers();
+    }
+}
+
+function previousBestsellersPage() {
+    if (bestsellersPageIndex > 0) {
+        bestsellersPageIndex--;
+        loadBestsellers();
+    }
+}
+
+// Funções de navegação para produtos melhores avaliados
+function nextTopRatedPage() {
+    const totalPages = Math.ceil(topRated.length / productsPerPage);
+    if (topRatedPageIndex < totalPages - 1) {
+        topRatedPageIndex++;
+        loadTopRated();
+    }
+}
+
+function previousTopRatedPage() {
+    if (topRatedPageIndex > 0) {
+        topRatedPageIndex--;
+        loadTopRated();
+    }
+}
+
+// Atualizar a função showPage para carregar as novas seções
+const originalShowPage = showPage;
+showPage = function(pageId) {
+    originalShowPage(pageId);
+    
+    if (pageId === 'home') {
+        loadBestsellers();
+        loadTopRated();
+    }
+};
+
+
+// Função para salvar perfil do usuário
+function saveProfile() {
+    const profileData = {
+        name: document.getElementById('profile-name').value,
+        email: document.getElementById('profile-email').value,
+        phone: document.getElementById('profile-phone').value,
+        bio: document.getElementById('profile-bio').value,
+        location: document.getElementById('profile-location').value
+    };
+    
+    // Salvar no localStorage
+    localStorage.setItem('userProfile', JSON.stringify(profileData));
+    
+    // Mostrar mensagem de sucesso
+    alert('Perfil salvo com sucesso!');
+}
+
+// Função para carregar dados do perfil
+function loadProfile() {
+    const savedProfile = localStorage.getItem('userProfile');
+    if (savedProfile) {
+        const profileData = JSON.parse(savedProfile);
+        
+        document.getElementById('profile-name').value = profileData.name || 'João Silva';
+        document.getElementById('profile-email').value = profileData.email || 'joao.silva@email.com';
+        document.getElementById('profile-phone').value = profileData.phone || '(11) 99999-9999';
+        document.getElementById('profile-bio').value = profileData.bio || 'Apaixonado por tecnologia e sustentabilidade. Adoro trocar e vender produtos que não uso mais!';
+        document.getElementById('profile-location').value = profileData.location || 'São Paulo, SP';
     }
 }
 
