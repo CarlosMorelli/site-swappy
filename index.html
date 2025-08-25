@@ -26,13 +26,18 @@
         <header class="header">
             <nav class="nav">
                 <div class="nav-left">
+                    <img src="logo.png" alt="Logo Troca" class="logo">
                     <span class="nav-item active">Home</span>
                 </div>
                 <div class="nav-right">
-                    <button class="nav-btn" onclick="showPage('login')">Log in</button>
-                    <button class="nav-btn primary" onclick="showPage('signup')">Sign Up</button>
+                    <button class="nav-btn" onclick="showPage('login')">👤</button>
                 </div>
             </nav>
+            <!-- Barra de Pesquisa -->
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Pesquisar produtos..." onkeyup="searchProducts(this.value)">
+                <button class="search-btn">🔍</button>
+            </div>
         </header>
 
         <!-- Main Content -->
@@ -51,15 +56,15 @@
 
             <!-- Categories -->
             <section class="categories">
-                <div class="category-card" data-category="roupas">
+                <div class="category-card" data-category="roupas" onclick="filterByCategory('roupas')">
                     <div class="category-icon">👕</div>
                     <span>Roupas</span>
                 </div>
-                <div class="category-card" data-category="eletronicos">
+                <div class="category-card" data-category="eletronicos" onclick="filterByCategory('eletronicos')">
                     <div class="category-icon">💻</div>
                     <span>Eletrônicos</span>
                 </div>
-                <div class="category-card" data-category="livros">
+                <div class="category-card" data-category="livros" onclick="filterByCategory('livros')">
                     <div class="category-icon">📚</div>
                     <span>Livros</span>
                 </div>
@@ -69,12 +74,15 @@
             <section class="products-section">
                 <div class="section-header">
                     <h2>Produtos Recentes</h2>
-                    <span class="section-count">1/1 ></span>
+                    <div class="carousel-controls">
+                        <button class="carousel-btn" onclick="previousPage()">←</button>
+                        <span class="section-count">1/1</span>
+                        <button class="carousel-btn" onclick="nextPage()">→</button>
+                    </div>
                 </div>
-                <div class="products-grid">
+                <div class="products-grid" id="products-grid">
                     <!-- Produtos serão carregados dinamicamente pelo JavaScript -->
                 </div>
-                <!-- Controles do carrossel serão adicionados dinamicamente -->
             </section>
 
             <!-- Producers -->
@@ -110,6 +118,27 @@
                 </div>
             </section>
         </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Sobre Nós</h3>
+                    <p>Somos uma plataforma dedicada a facilitar trocas e vendas de produtos, promovendo o consumo consciente e a economia circular. Conectamos pessoas com propósito!</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Conecte-se</h3>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/" target="_blank" class="social-link">📷</a>
+                        <a href="mailto:contato@troca.com" class="social-link">📧</a>
+                        <a href="https://wa.me/5511999999999" target="_blank" class="social-link">📱</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2025 Troca. Todos os direitos reservados.
+            </div>
+        </footer>
     </div>
 
     <!-- Página de Produto -->
@@ -129,13 +158,15 @@
 
             <!-- Product Info -->
             <section class="product-details">
-                <h2>Protato Name</h2>
-                <p class="product-type">Troca</p>
+                <h2 id="product-name">Nome do Produto</h2>
+                <p class="product-type" id="product-type">Troca</p>
+                <p class="product-price" id="product-price">R$ 0,00</p>
+                <button class="btn-primary full-width" onclick="addToCart()">Adicionar ao Carrinho</button>
                 <button class="btn-primary full-width" onclick="showPage('chat')">Quero trocar</button>
                 
                 <!-- Seller Info -->
                 <div class="seller-info">
-                    <div class="seller-avatar"></div>
+                    <div class="seller-avatar">👤</div>
                     <div class="seller-details">
                         <h3>João Silva</h3>
                         <div class="rating">
@@ -176,16 +207,17 @@
         <!-- Header -->
         <header class="page-header">
             <button class="back-btn" onclick="showPage('home')">←</button>
-            <h1>Tela de Anunciar Produto</h1>
+            <h1>Anunciar Produto</h1>
         </header>
 
         <!-- Main Content -->
         <main class="form-main">
             <!-- Product Image Upload -->
             <section class="image-upload-section">
-                <div class="upload-area">
-                    <div class="upload-placeholder"></div>
-                    <input type="file" accept="image/*" style="display: none;" id="image-upload">
+                <div class="upload-area" onclick="document.getElementById('image-upload').click()">
+                    <div class="upload-placeholder">📷</div>
+                    <input type="file" accept="image/*" style="display: none;" id="image-upload" onchange="handleImageUpload(this)">
+                    <p class="upload-text">Clique para adicionar imagem</p>
                 </div>
             </section>
 
@@ -193,24 +225,27 @@
             <section class="product-form">
                 <div class="form-group">
                     <label>Nome do Produto</label>
-                    <input type="text" class="form-input" placeholder="Nome do produto">
+                    <input type="text" class="form-input" placeholder="Nome do produto" id="product-name-input">
                 </div>
 
                 <div class="form-group">
                     <label>Preço</label>
-                    <input type="text" class="form-input" placeholder="R$ 20.00">
+                    <input type="text" class="form-input" placeholder="R$ 20.00" id="product-price-input">
                 </div>
-
-                <button class="btn-primary full-width">Anunciar Produto</button>
 
                 <div class="form-group">
                     <label>Categoria</label>
-                    <select class="form-select">
+                    <select class="form-select" id="product-category-input">
                         <option>Selecione uma categoria</option>
-                        <option>Roupas</option>
-                        <option>Eletrônicos</option>
-                        <option>Livros</option>
+                        <option value="roupas">Roupas</option>
+                        <option value="eletronicos">Eletrônicos</option>
+                        <option value="livros">Livros</option>
                     </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Descrição</label>
+                    <textarea class="form-textarea" placeholder="Descreva seu produto..." id="product-description-input"></textarea>
                 </div>
 
                 <div class="form-group toggle-group">
@@ -220,6 +255,8 @@
                         <label for="aceito-trocas" class="toggle-label"></label>
                     </div>
                 </div>
+                
+                <button class="btn-primary full-width" onclick="submitProduct()">Anunciar Produto</button>
             </section>
         </main>
     </div>
@@ -234,7 +271,7 @@
 
         <!-- Chat Messages -->
         <main class="chat-main">
-            <div class="chat-messages">
+            <div class="chat-messages" id="chat-messages">
                 <!-- Mensagem recebida -->
                 <div class="message received">
                     <div class="message-bubble">Olá! Tenho interesse no seu produto.</div>
@@ -250,11 +287,52 @@
         <!-- Chat Input -->
         <footer class="chat-footer">
             <div class="chat-input-container">
-                <button class="attachment-btn">+</button>
-                <input type="text" class="chat-input" placeholder="Mensagem">
-                <button class="send-btn">></button>
+                <button class="attachment-btn" onclick="toggleAttachmentOptions()">➕</button>
+                <input type="text" class="chat-input" placeholder="Mensagem" id="chat-input" onkeypress="handleChatKeyPress(event)">
+                <button class="send-btn" onclick="sendMessage()">➤</button>
+                <div class="attachment-options" id="attachment-options" style="display: none;">
+                    <button class="attachment-option" onclick="attachImage()">📷 Enviar Imagem</button>
+                    <button class="attachment-option" onclick="attachFile()">📎 Enviar Arquivo</button>
+                </div>
             </div>
         </footer>
+    </div>
+
+    <!-- Página de Chat List -->
+    <div class="container page" id="chat-list-page" style="display: none;">
+        <!-- Header -->
+        <header class="page-header">
+            <button class="back-btn" onclick="showPage('home')">←</button>
+            <h1>💬 Conversas</h1>
+        </header>
+
+        <!-- Main Content -->
+        <main class="chat-list-main">
+            <div class="chat-item" onclick="showPage('chat')">
+                <div class="chat-avatar">👤</div>
+                <div class="chat-info">
+                    <h3>João Silva</h3>
+                    <p>Olá! Tenho interesse no seu produto.</p>
+                </div>
+                <div class="chat-time">14:30</div>
+            </div>
+            <div class="chat-item" onclick="showPage('chat')">
+                <div class="chat-avatar">👤</div>
+                <div class="chat-info">
+                    <h3>Maria Santos</h3>
+                    <p>Podemos trocar por outro item?</p>
+                </div>
+                <div class="chat-time">13:15</div>
+            </div>
+            <div class="chat-item" onclick="showPage('chat')">
+                <div class="chat-avatar">👤</div>
+                <div class="chat-info">
+                    <h3>Pedro Costa</h3>
+                    <p>Produto ainda disponível?</p>
+                </div>
+                <div class="chat-time">12:00</div>
+            </div>
+        </main>
     </div>
 
     <!-- Página de Login -->
@@ -271,7 +349,7 @@
                 <h2>Bem-vindo de volta!</h2>
                 <p>Entre na sua conta para continuar</p>
 
-                <form class="form">
+                <form class="form" onsubmit="handleLogin(event)">
                     <div class="form-group">
                         <label>Email</label>
                         <input type="email" class="form-input" placeholder="seu@email.com" required>
@@ -306,7 +384,7 @@
                 <h2>Crie sua conta</h2>
                 <p>Junte-se à nossa comunidade de trocas</p>
 
-                <form class="form">
+                <form class="form" onsubmit="handleSignup(event)">
                     <div class="form-group">
                         <label>Nome completo</label>
                         <input type="text" class="form-input" placeholder="Seu nome completo" required>
@@ -346,46 +424,190 @@
         </header>
 
         <!-- Main Content -->
-        <main class="cart-items">
+        <main class="cart-items" id="cart-items">
             <!-- Itens do carrinho serão carregados dinamicamente -->
         </main>
+
+        <!-- Cart Summary -->
+        <div class="cart-summary">
+            <div class="cart-total">
+                <h3>Total: <span id="cart-total">R$ 0,00</span></h3>
+            </div>
+            <button class="btn-primary full-width" onclick="checkout()">Finalizar Compra</button>
+        </div>
     </div>
 
-    <!-- Página de Lista de Chats -->
-    <div class="container page" id="chat-list-page" style="display: none;">
+    <!-- Página de Confirmação de Compra -->
+    <div class="container page" id="checkout-page" style="display: none;">
         <!-- Header -->
         <header class="page-header">
-            <button class="back-btn" onclick="showPage('home')">←</button>
-            <h1>💬 Conversas</h1>
+            <button class="back-btn" onclick="showPage('carrinho')">←</button>
+            <h1>🛒 Finalizar Compra</h1>
         </header>
 
         <!-- Main Content -->
-        <main class="chat-list">
-            <div class="chat-item" onclick="showPage('chat')">
-                <div class="chat-avatar"></div>
-                <div class="chat-info">
-                    <h3>João Silva</h3>
-                    <p>Olá! Tenho interesse no seu produto.</p>
-                    <span class="chat-time">2 min atrás</span>
+        <main class="checkout-main">
+            <!-- Resumo do Pedido -->
+            <section class="order-summary">
+                <h2>Resumo do Pedido</h2>
+                <div class="order-items" id="checkout-items">
+                    <!-- Itens serão carregados dinamicamente -->
                 </div>
-            </div>
-            <div class="chat-item" onclick="showPage('chat')">
-                <div class="chat-avatar"></div>
-                <div class="chat-info">
-                    <h3>Maria Santos</h3>
-                    <p>Podemos negociar o preço?</p>
-                    <span class="chat-time">1 hora atrás</span>
+            </section>
+
+            <!-- Detalhes de Entrega -->
+            <section class="delivery-details">
+                <h3>📦 Detalhes da Entrega</h3>
+                <div class="delivery-info">
+                    <div class="delivery-option">
+                        <input type="radio" id="standard" name="delivery" value="standard" checked>
+                        <label for="standard">
+                            <strong>Entrega Padrão</strong>
+                            <span class="delivery-time">5-7 dias úteis</span>
+                            <span class="delivery-price">R$ 15,00</span>
+                        </label>
+                    </div>
+                    <div class="delivery-option">
+                        <input type="radio" id="express" name="delivery" value="express">
+                        <label for="express">
+                            <strong>Entrega Expressa</strong>
+                            <span class="delivery-time">2-3 dias úteis</span>
+                            <span class="delivery-price">R$ 25,00</span>
+                        </label>
+                    </div>
+                    <div class="delivery-option">
+                        <input type="radio" id="same-day" name="delivery" value="same-day">
+                        <label for="same-day">
+                            <strong>Entrega no Mesmo Dia</strong>
+                            <span class="delivery-time">Até 6 horas</span>
+                            <span class="delivery-price">R$ 35,00</span>
+                        </label>
+                    </div>
                 </div>
-            </div>
-            <div class="chat-item" onclick="showPage('chat')">
-                <div class="chat-avatar"></div>
-                <div class="chat-info">
-                    <h3>Pedro Costa</h3>
-                    <p>Produto ainda disponível?</p>
-                    <span class="chat-time">3 horas atrás</span>
+            </section>
+
+            <!-- Endereço de Entrega -->
+            <section class="address-section">
+                <h3>📍 Endereço de Entrega</h3>
+                <div class="address-form">
+                    <div class="form-group">
+                        <label>CEP</label>
+                        <input type="text" class="form-input" placeholder="00000-000" id="cep-input">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Rua</label>
+                            <input type="text" class="form-input" placeholder="Nome da rua" id="street-input">
+                        </div>
+                        <div class="form-group">
+                            <label>Número</label>
+                            <input type="text" class="form-input" placeholder="123" id="number-input">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Bairro</label>
+                            <input type="text" class="form-input" placeholder="Nome do bairro" id="neighborhood-input">
+                        </div>
+                        <div class="form-group">
+                            <label>Cidade</label>
+                            <input type="text" class="form-input" placeholder="Nome da cidade" id="city-input">
+                        </div>
+                    </div>
                 </div>
+            </section>
+
+            <!-- Método de Pagamento -->
+            <section class="payment-section">
+                <h3>💳 Método de Pagamento</h3>
+                <div class="payment-methods">
+                    <div class="payment-option">
+                        <input type="radio" id="credit-card" name="payment" value="credit-card" checked>
+                        <label for="credit-card">
+                            <span class="payment-icon">💳</span>
+                            <strong>Cartão de Crédito</strong>
+                            <span class="payment-desc">Visa, Mastercard, Elo</span>
+                        </label>
+                    </div>
+                    <div class="payment-option">
+                        <input type="radio" id="debit-card" name="payment" value="debit-card">
+                        <label for="debit-card">
+                            <span class="payment-icon">💳</span>
+                            <strong>Cartão de Débito</strong>
+                            <span class="payment-desc">Débito à vista</span>
+                        </label>
+                    </div>
+                    <div class="payment-option">
+                        <input type="radio" id="pix" name="payment" value="pix">
+                        <label for="pix">
+                            <span class="payment-icon">📱</span>
+                            <strong>PIX</strong>
+                            <span class="payment-desc">Pagamento instantâneo</span>
+                        </label>
+                    </div>
+                    <div class="payment-option">
+                        <input type="radio" id="boleto" name="payment" value="boleto">
+                        <label for="boleto">
+                            <span class="payment-icon">📄</span>
+                            <strong>Boleto Bancário</strong>
+                            <span class="payment-desc">Vencimento em 3 dias</span>
+                        </label>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Resumo de Valores -->
+            <section class="price-summary">
+                <h3>💰 Resumo de Valores</h3>
+                <div class="price-breakdown">
+                    <div class="price-line">
+                        <span>Subtotal dos produtos:</span>
+                        <span id="subtotal-price">R$ 0,00</span>
+                    </div>
+                    <div class="price-line">
+                        <span>Frete:</span>
+                        <span id="shipping-price">R$ 15,00</span>
+                    </div>
+                    <div class="price-line discount">
+                        <span>Desconto:</span>
+                        <span id="discount-price">- R$ 0,00</span>
+                    </div>
+                    <div class="price-line total">
+                        <span><strong>Total:</strong></span>
+                        <span id="final-total"><strong>R$ 0,00</strong></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Botões de Ação -->
+            <div class="checkout-actions">
+                <button class="btn-secondary" onclick="showPage('carrinho')">Voltar ao Carrinho</button>
+                <button class="btn-primary" onclick="confirmPurchase()">Confirmar Compra</button>
             </div>
         </main>
+    </div>
+
+    <!-- Modal de Detalhes do Produto no Carrinho -->
+    <div class="modal" id="cart-detail-modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Detalhes da Compra</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="product-detail">
+                    <h4 id="modal-product-name">Nome do Produto</h4>
+                    <p id="modal-product-price">R$ 0,00</p>
+                    <div class="shipping-info">
+                        <p><strong>Frete:</strong> R$ 15,00</p>
+                        <p><strong>Total:</strong> <span id="modal-total">R$ 0,00</span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-primary" onclick="proceedToPurchase()">Continuar Compra</button>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Carrinho - Troca</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel=\'stylesheet\' href=\'https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css\'>
+    <link rel=\'stylesheet\' href=\'https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css\'>
+</head>
+<body>
+    <div class="container page" id="carrinho-page" style="display: none;">
+        <!-- Header -->
+        <header class="page-header">
+            <button class="back-btn" onclick="showPage(\'home\')">←</button>
+            <h1>🛒 Meu Carrinho</h1>
+        </header>
+
+        <!-- Main Content -->
+        <main class="cart-items">
+            <!-- Itens do carrinho serão carregados dinamicamente -->
+        </main>
+
+        <!-- Modal de Detalhes do Produto no Carrinho -->
+        <div class="product-details-modal" id="cart-product-details-modal">
+            <div class="modal-content">
+                <button class="modal-close" onclick="closeCartProductDetailsModal()">✖</button>
+                <h2>Detalhes do Produto</h2>
+                <div class="product-info-modal">
+                    <!-- Detalhes do produto serão carregados aqui -->
+                </div>
+                <div class="purchase-details">
+                    <h3>Resumo da Compra</h3>
+                    <div class="detail-row">
+                        <span>Preço do Produto:</span>
+                        <span id="modal-product-price"></span>
+                    </div>
+                    <div class="detail-row">
+                        <span>Frete:</span>
+                        <span id="modal-shipping-cost"></span>
+                    </div>
+                    <div class="detail-row total">
+                        <span>Total:</span>
+                        <span id="modal-total-price"></span>
+                    </div>
+                </div>
+                <button class="btn-primary full-width">Finalizar Compra</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
